@@ -1,5 +1,7 @@
 package controllers;
 
+import model.BaseEntity;
+import play.libs.Json;
 import play.mvc.*;
 
 /**
@@ -15,7 +17,9 @@ public class HomeController extends Controller {
      * <code>GET</code> request with a path of <code>/</code>.
      */
     public Result index() {
-        return ok();
+        BaseEntity b = new BaseEntity();
+        b.setId("Muhammad Fayyaz");
+        return ok(Json.toJson(BaseEntity.builder().id("Muhammad Fayyaz").build()));
         //return ok(views.html.index.render());
     }
 
