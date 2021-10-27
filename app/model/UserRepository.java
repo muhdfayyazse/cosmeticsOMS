@@ -2,7 +2,6 @@ package model;
 
 import com.google.inject.ImplementedBy;
 
-import javax.persistence.EntityManager;
 import java.util.concurrent.CompletionStage;
 import java.util.stream.Stream;
 
@@ -10,5 +9,5 @@ import java.util.stream.Stream;
 public interface UserRepository {
     CompletionStage<User> add(User user);
 
-    CompletionStage<Stream<User>> list(EntityManager em);
+    CompletionStage<Stream<User>> list();
 }

@@ -13,17 +13,17 @@ public class UserRepositoryImpl extends BaseRepository<User> implements UserRepo
 
     @Inject
     public UserRepositoryImpl(JPAApi jpaApi, DatabaseExecutionContext executionContext) {
-        super(jpaApi, executionContext);
+        super(jpaApi,executionContext);
     }
 
     @Override
     public CompletionStage<User> add(User user) {
-        return supplyAsync(() -> this.wrap(em -> this.insert(em, user)), this.executionContext);
+        return supplyAsync(() -> this.insert(user), this.executionContext);
     }
 
     @Override
-    public CompletionStage<Stream<User>> list(EntityManager em) {
-        return supplyAsync(() -> this.list(em,User.class), this.executionContext);
+    public CompletionStage<Stream<User>> list() {
+        return supplyAsync(() ->this.list(User.class), this.executionContext);
     }
 
 

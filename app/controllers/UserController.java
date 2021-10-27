@@ -10,8 +10,10 @@ import play.mvc.Result;
 
 import javax.inject.Inject;
 import java.util.concurrent.CompletionStage;
+import java.util.stream.Collectors;
 
 import static java.util.concurrent.CompletableFuture.supplyAsync;
+import static play.libs.Json.toJson;
 
 
 public class UserController  extends Controller {
@@ -38,9 +40,8 @@ public class UserController  extends Controller {
     }
 
     public CompletionStage<Result> getUsers() {
-//        return userRepository
-//                .list(EntityManager em)
-//                .thenApplyAsync(userStream -> ok(toJson(userStream.collect(Collectors.toList()))), ec.current());
-        return supplyAsync(() -> ok());
+        return userRepository
+                .list()
+                .thenApplyAsync(userStream -> ok(toJson(userStream.collect(Collectors.toList()))), ec.current());
     }
 }
