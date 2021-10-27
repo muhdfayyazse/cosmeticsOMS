@@ -17,9 +17,7 @@ public class HomeController extends Controller {
      * <code>GET</code> request with a path of <code>/</code>.
      */
     public Result index() {
-        BaseEntity b = new BaseEntity();
-        b.setId("Muhammad Fayyaz");
-        return ok(Json.toJson(BaseEntity.builder().id("Muhammad Fayyaz").build()));
+        return ok();
         //return ok(views.html.index.render());
     }
 

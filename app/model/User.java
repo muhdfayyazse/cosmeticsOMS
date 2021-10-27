@@ -5,12 +5,14 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
-import java.io.Serializable;
+import javax.persistence.Entity;
 
 @NoArgsConstructor
 @SuperBuilder
 @Data
-public class BaseEntity implements Serializable {
-    @Column(name = "ID")
-    private String id;
+@Entity
+public class User extends BaseEntity{
+
+    @Column(name = "EMAIL")
+    private String email;
 }

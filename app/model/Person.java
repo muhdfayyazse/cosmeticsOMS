@@ -2,7 +2,7 @@ package model;
 
 import javax.persistence.*;
 
-@Entity
+
 public class Person {
 
     @Id
