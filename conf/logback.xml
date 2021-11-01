@@ -33,6 +33,9 @@
 
   <logger name="play" level="INFO" />
   <logger name="application" level="DEBUG" />
+  <logger name="org.jdbcdslog.ConnectionLogger" level="OFF"  />
+  <logger name="org.jdbcdslog.StatementLogger"  level="INFO" />
+  <logger name="org.jdbcdslog.ResultSetLogger"  level="OFF"  />
   <!-- this config is for logback framework -->
   <logger name="com.zaxxer.hikari" level="debug" additivity="false">
     <appender-ref ref="STDOUT"/>
