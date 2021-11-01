@@ -33,6 +33,11 @@
 
   <logger name="play" level="INFO" />
   <logger name="application" level="DEBUG" />
+  <!-- this config is for logback framework -->
+  <logger name="com.zaxxer.hikari" level="debug" additivity="false">
+    <appender-ref ref="STDOUT"/>
+  </logger>
+
 
   <root level="WARN">
     <appender-ref ref="ASYNCFILE" />

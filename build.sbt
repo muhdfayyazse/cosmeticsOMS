@@ -9,10 +9,12 @@ scalaVersion := "2.13.6"
 
 libraryDependencies ++= Seq(
   guice,
+  javaJdbc,
   javaJpa,
   "org.projectlombok" % "lombok" % "1.18.22",
   "org.hibernate" % "hibernate-core" % "5.4.30.Final",
-  "org.mariadb.jdbc" % "mariadb-java-client" % "3.0.2-rc"
+  //"org.mariadb.jdbc" % "mariadb-java-client" % "3.0.2-rc"
+  "org.mariadb.jdbc" % "mariadb-java-client" % "2.7.4"
 )
 
 

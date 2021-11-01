@@ -16,6 +16,8 @@ import java.io.Serializable;
 @Data
 @Entity
 public class User implements Serializable {
+
+
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name="UUID", strategy = "org.hibernate.id.UUIDGenerator")

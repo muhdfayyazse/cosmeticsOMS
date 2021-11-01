@@ -12,7 +12,6 @@ import javax.inject.Inject;
 import java.util.concurrent.CompletionStage;
 import java.util.stream.Collectors;
 
-import static java.util.concurrent.CompletableFuture.supplyAsync;
 import static play.libs.Json.toJson;
 
 
@@ -33,15 +32,14 @@ public class UserController  extends Controller {
     }
 
     public CompletionStage<Result> addUser(final Http.Request request) {
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>");
         User user = formFactory.form(User.class).bindFromRequest(request).get();
-        return userRepository
-                .add(user)
+        return userRepository.save(user)
                 .thenApplyAsync(p -> ok(), ec.current());
     }
 
     public CompletionStage<Result> getUsers() {
-        return userRepository
-                .list()
+        return userRepository.list()
                 .thenApplyAsync(userStream -> ok(toJson(userStream.collect(Collectors.toList()))), ec.current());
     }
 }
