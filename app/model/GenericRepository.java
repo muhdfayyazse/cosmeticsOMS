@@ -57,5 +57,11 @@ public class GenericRepository<T extends Serializable> {
     public Stream<T> list(EntityManager em ,Class<T> clazz) {
         return em.createQuery("select p from "+ clazz.getName() + " p" , clazz).getResultList().stream();
     }
+    public Stream<T> listByProductId(String pId, Class<T> clazz) {
+        return this.wrap(em->this.listByProductId(em,pId,clazz));
+    }
+    public Stream<T> listByProductId(EntityManager em, String pId ,Class<T> clazz) {
+        return em.createQuery("select p from "+ clazz.getName() + " p where p.productId='"+ pId +"'" , clazz).getResultList().stream();
+    }
 
 }

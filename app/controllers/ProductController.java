@@ -11,6 +11,7 @@ import play.mvc.Http;
 import play.mvc.Result;
 import request.ProductImageRequest;
 import request.ProductRequest;
+import response.*;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -18,6 +19,8 @@ import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.stream.Collectors;
+
+import static play.libs.Json.toJson;
 
 
 public class ProductController extends Controller {
@@ -47,7 +50,60 @@ public class ProductController extends Controller {
     }
 
     public CompletionStage<Result> index() {
-        return CompletableFuture.supplyAsync(() -> ok());
+        List<ProductResponse> productResponseList = this.productRepository.list(Product.class)
+                .map(m -> {
+                    ProductResponse pr = ProductResponse.builder()
+                            .id(m.getId())
+                            .code(m.getCode())
+                            .name(m.getName())
+                            .description(m.getDescription())
+                            .stock(m.getStock())
+                            .price(m.getPrice())
+                            .discount(m.getDiscount())
+                            .rating(m.getRating())
+                            .salePrice(m.getSalePrice())
+                            .category(m.getCategoryId())
+                            .deleted(m.getDeleted())
+                            .active(m.getActive())
+                            .build();
+                    pr.setTags(this.productTagRepository.listByProductId(m.getId(),ProductTag.class)
+                            .map(t-> ProductTagResponse.builder()
+                                    .id(t.getId())
+                                    .category(t.getCategoryId())
+                                    .build()
+                            )
+                            .collect(Collectors.toList())
+                    );
+                    pr.setSize(this.productSizeRepository.listByProductId(m.getId(),ProductSize.class)
+                            .map(t-> ProductSizeResponse.builder()
+                                    .id(t.getId())
+                                    .size(t.getSizeId())
+                                    .build()
+                            )
+                            .collect(Collectors.toList())
+                    );
+                    pr.setColors(this.productColorRepository.listByProductId(m.getId(),ProductColor.class)
+                            .map(t-> ProductColorResponse.builder()
+                                    .id(t.getId())
+                                    .color(t.getColorId())
+                                    .build()
+                            )
+                            .collect(Collectors.toList())
+                    );
+                    pr.setPictures(this.productImageRepository.listByProductId(m.getId(),ProductImage.class)
+                            .map(t-> ProductImageResponse.builder()
+                                    .id(t.getId())
+                                    .fileName(t.getFileName())
+                                    .imageType(t.getImageType())
+                                    .imageBased64(t.getImageBased64())
+                                    .build()
+                            )
+                            .collect(Collectors.toList())
+                    );
+                    return pr;
+                })
+                .collect(Collectors.toList());
+        return CompletableFuture.supplyAsync(() -> ok(toJson(productResponseList)));
     }
 
     public CompletionStage<Result> getProduct(final String id) {
