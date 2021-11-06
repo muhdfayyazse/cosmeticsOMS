@@ -9,6 +9,7 @@ import play.mvc.Http;
 import play.mvc.Result;
 
 import javax.inject.Inject;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.stream.Collectors;
 
@@ -26,20 +27,19 @@ public class UserController  extends Controller {
         this.userRepository = userRepository;
         this.ec = ec;
     }
-    public Result index(final Http.Request request) {
-        //ok(views.html.index.render(request));
-        return ok();
+    public CompletionStage<Result> index() {
+        return userRepository.list()
+                .thenApplyAsync(userStream -> ok(toJson(userStream.collect(Collectors.toList()))), ec.current());
     }
 
     public CompletionStage<Result> addUser(final Http.Request request) {
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>");
         User user = formFactory.form(User.class).bindFromRequest(request).get();
         return userRepository.save(user)
                 .thenApplyAsync(p -> ok(), ec.current());
     }
 
-    public CompletionStage<Result> getUsers() {
-        return userRepository.list()
-                .thenApplyAsync(userStream -> ok(toJson(userStream.collect(Collectors.toList()))), ec.current());
+    public CompletionStage<Result> getUser(final String id) {
+        System.out.println(">>>>>>>>>> " + id);
+        return CompletableFuture.supplyAsync(()->ok());
     }
 }

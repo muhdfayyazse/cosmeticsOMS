@@ -15,21 +15,21 @@ import java.io.Serializable;
 @SuperBuilder
 @Data
 @Entity
-public class User implements Serializable {
-
-
+public class ProductImage  implements Serializable {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name="UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
 
-    @Column(name = "EMAIL")
-    private String email;
+    @Column(name = "PRODUCT_ID")
+    private String productId;
 
-    @Column(name = "PASSWORD")
-    private String password;
+    @Column(name = "FILE_NAME")
+    private String fileName;
 
-    @Column(name = "IS_ADMIN")
-    private boolean admin;
+    @Column(name = "IMAGE_TYPE")
+    private String imageType;
 
+    @Column(name = "IMAGE_BASED64", columnDefinition="TEXT", length = 25000)
+    private String imageBased64;
 }

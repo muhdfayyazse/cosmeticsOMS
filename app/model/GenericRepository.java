@@ -19,7 +19,7 @@ public class GenericRepository<T extends Serializable> {
         this.executionContext = executionContext;
     }
 
-    protected <E> E wrap(Function<EntityManager, E> function) {
+    public <E> E wrap(Function<EntityManager, E> function) {
         return jpaApi.withTransaction(function);
     }
 

@@ -15,21 +15,18 @@ import java.io.Serializable;
 @SuperBuilder
 @Data
 @Entity
-public class User implements Serializable {
-
-
+public class Category implements Serializable {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name="UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
 
-    @Column(name = "EMAIL")
-    private String email;
+    @Column(name = "CODE")
+    private String code;
 
-    @Column(name = "PASSWORD")
-    private String password;
+    @Column(name = "NAME")
+    private String name;
 
-    @Column(name = "IS_ADMIN")
-    private boolean admin;
-
+    @Column(name = "DESCRIPTION")
+    private String description;
 }
