@@ -50,7 +50,17 @@ public class ProductController extends Controller {
     }
 
     public CompletionStage<Result> index() {
-        List<ProductResponse> productResponseList = this.productRepository.list(Product.class)
+        return CompletableFuture.supplyAsync(() -> ok(toJson(this.getProduct(null))));
+    }
+
+    public CompletionStage<Result> find(final String id) {
+        return CompletableFuture.supplyAsync(() -> ok(toJson(this.getProduct(id))));
+    }
+
+    private List<ProductResponse> getProduct(String id){
+        return Optional.ofNullable(id)
+                .map(m-> this.productRepository.listByProductId(m,Product.class))
+                .orElseGet(()-> this.productRepository.list(Product.class))
                 .map(m -> {
                     ProductResponse pr = ProductResponse.builder()
                             .id(m.getId())
@@ -103,11 +113,6 @@ public class ProductController extends Controller {
                     return pr;
                 })
                 .collect(Collectors.toList());
-        return CompletableFuture.supplyAsync(() -> ok(toJson(productResponseList)));
-    }
-
-    public CompletionStage<Result> getProduct(final String id) {
-        return CompletableFuture.supplyAsync(() -> ok());
     }
 
 
